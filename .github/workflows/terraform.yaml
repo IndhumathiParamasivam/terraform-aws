@@ -69,12 +69,12 @@ jobs:
             cd terraform
             ls -la
 
-      - name: Terraform Init
-        id: init
-        run: |
+      #- name: Terraform Init
+        #id: init
+        #run: |
             #rm -rf .terraform
-            terraform init
-        working-directory: "./terraform"
+            #terraform init
+        #working-directory: "./terraform"
 
       - name: Terraform Apply
         #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
