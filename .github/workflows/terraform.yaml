@@ -5,14 +5,17 @@ on:
     branches:
       - main
 
+env:
+
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ap-south-1
+
 jobs:
-  terraform:
-    name: "Terraform"
+
+  terraform plan:
+    name: "Terraform-Plan"
     runs-on: ubuntu-latest
-    env:
-         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         AWS_DEFAULT_REGION: ap-south-1
 
     steps:
       - name: Checkout
@@ -34,7 +37,45 @@ jobs:
         run: terraform plan -no-color -out="tfplan"
         working-directory: "./terraform"
 
+      - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        # Artifact name
+        name:  terraform_plan_result #.zip will be added automatically
+        path: ./terraform/tfplan
+
+  terraform apply:
+    name: "Terraform-Apply"
+    needs: [Terraform-plan]
+    environment:
+      name: Prod
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Download the plan artifcats
+         uses: actions/download-artifact@v2
+            with:
+                name: terraform_plan_result
+
+      - name: listing files
+        run: |
+            ls -la
+
+      - name: Terraform Init
+        id: init
+        run: |
+            #rm -rf .terraform
+            terraform init
+        working-directory: "./terraform"
+
       #- name: Terraform Apply
         #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        #run: terraform apply -auto-approve
+       # run: terraform apply "tfplan" -auto-approve
         #working-directory: "./terraform"
