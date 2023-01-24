@@ -64,9 +64,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
            name: terraform_plan_result
+        working-directory: "./terraform"
 
       - name: listing files
         run: |
+            ls -la
+            cd terraform
             ls -la
 
       - name: Terraform Init
@@ -76,7 +79,7 @@ jobs:
             terraform init
         working-directory: "./terraform"
 
-      #- name: Terraform Apply
+      - name: Terraform Apply
         #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-       # run: terraform apply "tfplan" -auto-approve
-        #working-directory: "./terraform"
+        run: terraform apply "tfplan" -auto-approve
+        working-directory: "./terraform"
