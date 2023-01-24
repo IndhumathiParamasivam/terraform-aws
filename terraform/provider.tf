@@ -5,7 +5,7 @@ terraform {
       version = "~> 4.0"
     }
   }
-  backend "S3" {
+  backend "s3" {
   region = "ap-south-1"
   bucket = "statefiles-terraform-github"
   key    = "test.tfstate"
