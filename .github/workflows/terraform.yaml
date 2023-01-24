@@ -37,10 +37,10 @@ jobs:
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.2
-          with:
+        with:
         # Artifact name
-            name:  terraform_plan_result #.zip will be added automatically
-            path: ./terraform/tfplan
+          name:  terraform_plan_result #.zip will be added automatically
+          path: ./terraform/tfplan
 
   terraform apply:
     name: "Terraform-Apply"
@@ -62,8 +62,8 @@ jobs:
 
       - name: Download the plan artifcats
          uses: actions/download-artifact@v2
-            with:
-                name: terraform_plan_result
+         with:
+           name: terraform_plan_result
 
       - name: listing files
         run: |
