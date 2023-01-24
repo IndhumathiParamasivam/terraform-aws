@@ -36,11 +36,11 @@ jobs:
         working-directory: "./terraform"
 
       - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.2
-      with:
+        uses: actions/upload-artifact@v2.2.2
+          with:
         # Artifact name
-        name:  terraform_plan_result #.zip will be added automatically
-        path: ./terraform/tfplan
+            name:  terraform_plan_result #.zip will be added automatically
+            path: ./terraform/tfplan
 
   terraform apply:
     name: "Terraform-Apply"
