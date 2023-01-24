@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  terraform plan:
+  terraform-plan:
     name: "Terraform-Plan"
     runs-on: ubuntu-latest
     env:
@@ -42,7 +42,7 @@ jobs:
           name:  terraform_plan_result #.zip will be added automatically
           path: ./terraform/tfplan
 
-  terraform apply:
+  terraform-apply:
     name: "Terraform-Apply"
     needs: [Terraform-plan]
     environment:
