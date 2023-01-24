@@ -61,8 +61,8 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Download the plan artifcats
-         uses: actions/download-artifact@v2
-         with:
+        uses: actions/download-artifact@v2
+        with:
            name: terraform_plan_result
 
       - name: listing files
